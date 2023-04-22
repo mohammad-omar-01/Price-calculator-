@@ -4,7 +4,10 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            Product book = new Product("The Little Prince", 12345, 20.25, 21);
+            book.ProductPriceReport();
+
+
         }
     }
 }
