@@ -13,47 +13,51 @@ namespace Price_Calculator
 
         public double price { get; set; }
 
-        public double flat_rate_task { get; private set; }
+        public double total_price { get; set; }
 
-        public void SetTaskPercentage(double task_percentage)
-        {
-            flat_rate_task = (task_percentage / 100);
-        }
+        public double flat_rate_tax { get; private set; }
+        public double discount { get; set; }
 
         public Product()
         {
             name = "";
             upc = 0;
             price = 0.0;
-            flat_rate_task = 0.2;
+            flat_rate_tax = 0.2;
+            discount = 0;
         }
-        public Product(String name, int upc, double price, double flat_rate_task)
+        public Product(String name, int upc, double price, double flat_rate_tax, double discount)
         {
             this.name = name;
             this.upc = upc;
             this.price = price;
-            SetTaskPercentage(flat_rate_task);
+            SetTaskPercentage(flat_rate_tax);
+            this.discount = discount / 100;
+            SetTotalPrice();
 
         }
-        private double PriceAfterAddingTax() { 
-            double result = 0.0;
-            double added_price_after_tax = price * flat_rate_task;
-            result=price+added_price_after_tax;
-            return Math.Round(result, 2);
-        
-        }
-
-        public void ProductPriceReport()
+        public void SetTaskPercentage(double task_percentage)
         {
-            string formatted_price = Math.Round(price, 2).ToString("$0.00");
-            string price_with_tax = PriceAfterAddingTax().ToString("$0.00");
-            Console.WriteLine($"Product price reoprted as {formatted_price} before tax and " +
-                $"{price_with_tax} after {flat_rate_task * 100}% tax");
-
+            flat_rate_tax = (task_percentage / 100);
         }
 
+        private double ApplyDiscount()
+        {
+            double added_price_after_discount = (price * this.discount);
+            return Math.Round(added_price_after_discount, 2);
+        }
+        private double PriceAfterAddingTax()
+        {
+            double added_price_after_tax = price * flat_rate_tax;
+            return Math.Round(added_price_after_tax, 2);
 
+        }
+        private void SetTotalPrice()
+        {
+            this.total_price = price + PriceAfterAddingTax() - ApplyDiscount();
+        }
 
+        
 
     }
 }

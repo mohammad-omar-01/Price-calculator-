@@ -4,7 +4,7 @@
     {
         static void Main(string[] args)
         {
-            Product book = new Product("The Little Prince", 12345, 20.25, 21);
+            Product book = new Product("The Little Prince", 12345, 20.25, 20,15);
             book.ProductPriceReport();
 
 
