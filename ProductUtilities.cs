@@ -65,6 +65,7 @@ namespace Price_Calculator
             double added_price_after_discount =discountAmmount();
             added_price_after_discount = Math.Round(added_price_after_discount, 2);
             return added_price_after_discount.ToString("0.00");
+             
 
         }
         
