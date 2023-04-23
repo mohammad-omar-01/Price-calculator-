@@ -411,6 +411,9 @@ obj/
 ### OpenFrameworks+VisualStudio ###
 # ignore generated binaries
 # but not the data folder
+bin/
+.vs/
+obj/
 
 /bin/*
 !/bin/data/
