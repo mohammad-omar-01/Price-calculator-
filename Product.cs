@@ -8,7 +8,9 @@ namespace Price_Calculator
 {
     public class Product
     {
+        
         public String name { get; set; }
+
         public int upc { get; set; }
 
         public double price { get; set; }
@@ -25,6 +27,9 @@ namespace Price_Calculator
             price = 0.0;
             flat_rate_tax = 0.2;
             discount = 0;
+            ProductUtilities.CreateInstance(this);
+            this.total_price=this.CalculateTotalPrice();
+
         }
         public Product(String name, int upc, double price, double flat_rate_tax, double discount)
         {
@@ -33,7 +38,12 @@ namespace Price_Calculator
             this.price = price;
             SetTaskPercentage(flat_rate_tax);
             this.discount = discount / 100;
-            SetTotalPrice();
+            ProductUtilities.CreateInstance(this);
+            this.total_price=this.CalculateTotalPrice();
+
+
+
+
 
         }
         public void SetTaskPercentage(double task_percentage)
@@ -41,23 +51,11 @@ namespace Price_Calculator
             flat_rate_tax = (task_percentage / 100);
         }
 
-        private double ApplyDiscount()
-        {
-            double added_price_after_discount = (price * this.discount);
-            return Math.Round(added_price_after_discount, 2);
-        }
-        private double PriceAfterAddingTax()
-        {
-            double added_price_after_tax = price * flat_rate_tax;
-            return Math.Round(added_price_after_tax, 2);
-
-        }
-        private void SetTotalPrice()
-        {
-            this.total_price = price + PriceAfterAddingTax() - ApplyDiscount();
-        }
-
-        
+       
 
     }
+
+
+
+
 }
