@@ -11,12 +11,12 @@ namespace Price_Calculator
     public  static  class ProductUtilities
     {
         private static Product product = new Product();
-        public static void CreateInstance(Product p) {
+        public static void CreateInstance(Product p)
+        {
 
             product = p;
+
         }
-
-
         public static void ProductPriceReport(this Product p)
         {
 
@@ -31,7 +31,7 @@ namespace Price_Calculator
             Console.WriteLine($"Title \"{product.name}\", UPC = {product.upc}, price= {price} ");
 
             Console.WriteLine($"Tax = {product.flat_rate_tax * 100}%, discount = {product.discount*100}% " +
-                $"Total price is = {FormateValue( product .total_price)} \n {discount} ");
+                $"Total price is = {FormateValue( product .total_price)} \n Discount amount is = {discount} ");
 
         }
         private static double TaxAmmount() {
@@ -67,11 +67,18 @@ namespace Price_Calculator
             return added_price_after_discount.ToString("0.00");
              
 
-        }
-        
+        }        
         public static double CalculateTotalPrice(this Product p) { 
         return product.price -discountAmmount()+TaxAmmount();
         
         }
+        public static void ApplyUCPDisctount(this Product p,int upc,double discount) {
+            if (p.upc != upc) {
+                return;
+            }
+            p.discount +=discount/100;
+            p.SetTotalPrice();
+        }
     }
+
 }
