@@ -399,6 +399,11 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
+<<<<<<< HEAD:.gitignore
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 307fa8ea6bcb69dd188ba72e98553dc2749b0eb4:.gitigonre
 ### DotnetCore ###
 # .NET Core build folders
 bin/
@@ -477,6 +482,10 @@ Desktop.ini
 
 ### OpenFrameworks+VisualStudio Patch ###
 
+<<<<<<< HEAD:.gitignore
+=======
+>>>>>>> ca67da1 (DELETE UNWATNED FILES)
+>>>>>>> 307fa8ea6bcb69dd188ba72e98553dc2749b0eb4:.gitigonre
 ### VisualStudio ###
 
 # User-specific files
