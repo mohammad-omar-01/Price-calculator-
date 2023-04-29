@@ -1,20 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PriceCalculator
+﻿namespace PriceCalculator
 {
-    internal static  class Report
+    internal static class Report
     {
-        public static void PrintWithTax (this Product product,Tax tax) {
+        public static void PrintWithTax(this Product product, Tax tax)
+        {
             SimplePrint(product);
-            var productTax=new ProductTax(product, tax);
+            var productTax = new ProductTax(product, tax);
             double amountOfTax = productTax.GetTax();
             double totalPrice = product.Price.RegularPrice + amountOfTax;
-            var formattedTotalPrice=StringFormatter.FormatRegularValue(totalPrice);
+            var formattedTotalPrice = StringFormatter.FormatRegularValue(totalPrice);
 
 
 
@@ -22,7 +16,8 @@ namespace PriceCalculator
 
 
         }
-        public static void SimplePrint(this Product product) {
+        public static void SimplePrint(this Product product)
+        {
             Console.WriteLine($"Title \"{product.Name}\", UPC = {product.Upc}, Price= {product.Price.FormattedPrice} ");
 
         }

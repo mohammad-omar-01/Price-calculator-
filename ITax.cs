@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PriceCalculator
+﻿namespace PriceCalculator
 {
-    internal  interface ITax
+    internal interface ITax
     {
-        public  double CalculateTax( Product product,Tax tax);
+        public double CalculateTax(Product product, Tax tax);
 
 
     }
