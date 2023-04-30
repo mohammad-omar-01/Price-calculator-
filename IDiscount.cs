@@ -1,7 +1,9 @@
-﻿namespace Price_Calculator
+﻿using PriceCalculator;
+
+namespace Price_Calculator
 {
     public interface IDiscount
     {
-        double DiscountRate { get; set; }
+        public double CalculateDiscount(Product product, Discount discount);
     }
 }

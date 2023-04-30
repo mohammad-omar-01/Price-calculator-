@@ -2,11 +2,11 @@
 
 namespace PriceCalculator
 {
-    internal class DiscountService : IDiscount
+    public  class DiscountService : IDiscount
     {
-        double IDiscount.CalculateDiscount(Product product, Discount discount)
+        public double  CalculateDiscount(Product product, Discount discount)
         {
-            var discountAmount = product.Price.RegularPrice * discount.DiscountRate;
+            var discountAmount = product.price.RegularPrice * discount.DiscountRate;
             return Math.Round(discountAmount, 2);
         }
     }

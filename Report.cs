@@ -1,24 +1,53 @@
-﻿namespace PriceCalculator
+﻿using Price_Calculator;
+
+namespace PriceCalculator
 {
-    internal static class Report
+    public  class Report
     {
-        public static void PrintWithTax(this Product product, Tax tax)
+        public Tax tax { get; set; }
+        public Discount discount { get; set; }
+        public Report(Tax tax, Discount discount)
         {
-            SimplePrint(product);
-            var productTax = new ProductTax(product, tax);
-            double amountOfTax = productTax.GetTax();
-            double totalPrice = product.Price.RegularPrice + amountOfTax;
-            var formattedTotalPrice = StringFormatter.FormatRegularValue(totalPrice);
+            this.tax = tax;
+            this.discount = discount;
+        }
+        public  double TaxAmount { get; private set; }
+        public  void setTaxAmount ( Product product, Tax tax)
+        {
+            TaxService taxService = new TaxService();
 
-
-
-            Console.WriteLine($"{amountOfTax} Total Price is = {formattedTotalPrice}");
+            TaxAmount = taxService.CalculateTax(product, tax);
 
 
         }
-        public static void SimplePrint(this Product product)
+
+
+        public  void PrintWithTaxOnly( Product product, Tax tax)
         {
-            Console.WriteLine($"Title \"{product.Name}\", UPC = {product.Upc}, Price= {product.Price.FormattedPrice} ");
+
+            double totalPrice = product.price.RegularPrice + TaxAmount;
+            var formattedTotalPrice = StringFormatter.FormatRegularValue(totalPrice);
+
+            setTaxAmount(product, tax);
+
+            Console.WriteLine($"{TaxAmount} Total price is = {formattedTotalPrice}");
+
+
+        }
+        public  void SimplePrint( Product product)
+        {
+            Console.WriteLine($"Title \"{product.Name}\", UPC = {product.Upc}, price= {product.price.FormattedPrice} ");
+
+        }
+        public  void PrintWithDiscount( Product product,Discount discount)
+        {
+            DiscountService discountService = new DiscountService();
+            var DiscountAmount = discountService.CalculateDiscount(product, discount);
+            
+            double totalprice = TaxAmount + product.price.RegularPrice - DiscountAmount;
+            Price totalPrice=new Price(totalprice);
+
+            Console.WriteLine($"{DiscountAmount} Total price is = {totalPrice.FormattedPrice}");
 
         }
 
