@@ -9,7 +9,8 @@ namespace PriceCalculator
             Tax tax = new Tax(20);
             Discount discount = new Discount(15);
             ProductRepository repository = new ProductRepository();
-            Report report=new Report(tax,discount);
+            Report report = new Report(tax, discount);
+            bool DiscountIsSet = false;
             while (true)
             {
                 string choice = menu();
@@ -23,7 +24,7 @@ namespace PriceCalculator
                             try
                             {
                                 taxentered = double.Parse(Console.ReadLine());
-                                
+
                             }
                             catch
                             {
@@ -44,16 +45,17 @@ namespace PriceCalculator
                             try
                             {
                                 discountEnterd = double.Parse(Console.ReadLine());
-                                
+                                discount.DiscountRate = discountEnterd;
+                                report.discount = discount;
+                                DiscountIsSet = true;
+
+
                             }
                             catch
                             {
-                                Console.WriteLine("Invalid Discount Amount,Tax has been set to 10%");
 
-                                discountEnterd = 0.1;
                             }
-                            discount.DiscountRate = discountEnterd;
-                            report.discount = discount;
+                          
 
                             break;
 
@@ -74,7 +76,7 @@ namespace PriceCalculator
                                         {
                                             report.setTaxAmount(item, tax);
                                             report.SimplePrint(item);
-                                            report.PrintWithTaxOnly(item,tax);
+                                            report.PrintWithTaxOnly(item, tax);
 
                                         }
 
@@ -87,8 +89,13 @@ namespace PriceCalculator
                                             report.setTaxAmount(item, tax);
 
                                             report.SimplePrint(item);
+                                            if(DiscountIsSet)
 
-                                            report.PrintWithDiscount(item,discount);
+                                            report.PrintWithDiscount(item, discount);
+                                            else
+                                            {
+                                                Console.WriteLine(" No Discount\n");
+                                            }
                                         }
                                         break;
 
@@ -101,10 +108,15 @@ namespace PriceCalculator
 
                                             report.SimplePrint(item);
 
-                                            report.PrintWithTaxOnly(item,tax);
+                                            report.PrintWithTaxOnly(item, tax);
+                                            if(DiscountIsSet)
 
-                                            report.PrintWithDiscount(item,discount);
-                                            
+                                                report.PrintWithDiscount(item, discount);
+                                            else
+                                            {
+                                                Console.WriteLine(" No Discount\n");
+                                            }
+
 
                                         }
                                         break;
@@ -120,7 +132,7 @@ namespace PriceCalculator
                         }
                     case "4":
                         {
-                            return ;
+                            return;
                         }
 
 
