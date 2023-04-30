@@ -12,7 +12,7 @@ namespace PriceCalculator
             Report report=new Report(tax,discount);
             while (true)
             {
-                string choice = minue();
+                string choice = menu();
                 switch (choice)
                 {
                     case "1":
@@ -129,7 +129,7 @@ namespace PriceCalculator
 
 
         }
-        public static string minue()
+        public static string menu()
         {
 
             Console.WriteLine("1. Set Tax\n" +
