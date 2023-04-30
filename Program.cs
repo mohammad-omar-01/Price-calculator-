@@ -1,4 +1,6 @@
-﻿namespace Price_Calculator
+﻿using Price_Calculator;
+
+namespace PriceCalculator
 {
     internal class Program
     {
@@ -109,8 +111,12 @@
                                             report.PrintWithTaxOnly(item, tax);
                                             if(DiscountIsSet)
 
-                                            report.PrintWithDiscount(item,discount);
-                                            
+                                                report.PrintWithDiscount(item, discount);
+                                            else
+                                            {
+                                                Console.WriteLine(" No Discount\n");
+                                            }
+
 
                                         }
                                         break;
@@ -126,7 +132,7 @@
                         }
                     case "4":
                         {
-                            return ;
+                            return;
                         }
 
 
