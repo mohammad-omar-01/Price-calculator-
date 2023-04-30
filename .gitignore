@@ -1,5 +1,5 @@
-# Created by https://www.toptal.com/developers/gitignore/api/csharp,visualstudio
-# Edit at https://www.toptal.com/developers/gitignore?templates=csharp,visualstudio
+# Created by https://www.toptal.com/developers/gitignore/api/csharp,dotnetcore,visualstudio,openframeworks+visualstudio
+# Edit at https://www.toptal.com/developers/gitignore?templates=csharp,dotnetcore,visualstudio,openframeworks+visualstudio
 
 ### Csharp ###
 ## Ignore Visual Studio temporary files, build results, and
@@ -399,6 +399,93 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
+<<<<<<< HEAD:.gitignore
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 307fa8ea6bcb69dd188ba72e98553dc2749b0eb4:.gitigonre
+### DotnetCore ###
+# .NET Core build folders
+bin/
+obj/
+
+# Common node modules locations
+/node_modules
+/wwwroot/node_modules
+
+### OpenFrameworks+VisualStudio ###
+# ignore generated binaries
+# but not the data folder
+bin/
+.vs/
+obj/
+
+/bin/*
+!/bin/data/
+
+# general
+
+[Bb]uild/
+*.o
+[Dd]ebug*/
+[Rr]elease*/
+*.mode*
+*.app/
+.svn/
+
+# IDE files which should
+# be ignored
+
+# XCode
+*.pbxuser
+*.perspective
+*.perspectivev3
+*.mode1v3
+*.mode2v3
+# XCode 4
+xcuserdata
+*.xcworkspace
+
+# Code::Blocks
+*.depend
+*.layout
+
+# Visual Studio
+
+# Eclipse
+.metadata
+local.properties
+.externalToolBuilders
+
+# operating system
+
+# Linux
+# KDE
+.directory
+.AppleDouble
+
+# OSX
+.DS_Store
+*.swp
+*~.nib
+# Thumbnails
+._*
+
+# Windows
+# Image file caches
+Thumbs.db
+# Folder config file
+Desktop.ini
+
+# Android
+.csettings
+
+### OpenFrameworks+VisualStudio Patch ###
+
+<<<<<<< HEAD:.gitignore
+=======
+>>>>>>> ca67da1 (DELETE UNWATNED FILES)
+>>>>>>> 307fa8ea6bcb69dd188ba72e98553dc2749b0eb4:.gitigonre
 ### VisualStudio ###
 
 # User-specific files
@@ -580,4 +667,4 @@ FodyWeavers.xsd
 ### VisualStudio Patch ###
 # Additional files built by Visual Studio
 
-# End of https://www.toptal.com/developers/gitignore/api/csharp,visualstudio
+# End of https://www.toptal.com/developers/gitignore/api/csharp,dotnetcore,visualstudio,openframeworks+visualstudio
