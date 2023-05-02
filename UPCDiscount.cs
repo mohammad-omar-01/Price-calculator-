@@ -9,19 +9,19 @@ namespace PriceCalculator
 {
     public class UPCDiscount
     {
-        public int Upc { get; set; }
+        public int UpcNumber { get; set; }
 
         public Discount UPCdiscount { get; set; } 
         public UPCDiscount(int upc, Discount discountRate)
         {
-            Upc = upc;
+            UpcNumber = upc;
             UPCdiscount = discountRate;
         }
 
         public double CalculateUpcDiscount(Product product)
         {
             double result = 0;
-            if (product.Upc == this.Upc) {
+            if (product.Upc == this.UpcNumber) {
                 result =  product.price.RegularPrice * UPCdiscount.DiscountRate;
             }
             return Math.Round(result,2);

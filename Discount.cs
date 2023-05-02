@@ -3,6 +3,7 @@
     public class Discount
     {
         private double discount;
+        public bool IsBeforeTax { get; set; }
         public double DiscountRate
         {
             get { return discount; }
@@ -16,6 +17,7 @@
         public Discount(double value)
         {
             this.DiscountRate = value;
+            this.IsBeforeTax = false;
 
         }
     }

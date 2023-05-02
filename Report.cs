@@ -59,7 +59,7 @@ namespace PriceCalculator
             if (upcDiscountAmount > 0)
             {
                 var formattedUpcDiscount=StringFormatter.FormatRegularValue(upcDiscountAmount);
-                Console.WriteLine($"Upc Discount is {formattedUpcDiscount}");
+                Console.WriteLine($"UpcNumber Discount is {formattedUpcDiscount}");
             }
 
             Console.WriteLine($"Total Discount Amount is {DiscountAmount}");
