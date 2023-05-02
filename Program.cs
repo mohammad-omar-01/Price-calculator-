@@ -8,9 +8,11 @@ namespace PriceCalculator
         {
             Tax tax = new Tax(20);
             Discount discount = new Discount(15);
+            UPCDiscount upcDiscount=null; 
             ProductRepository repository = new ProductRepository();
             Report report = new Report(tax, discount);
             bool DiscountIsSet = false;
+            bool UpcDiscountIsSet=false;
             while (true)
             {
                 string choice = menu();
@@ -77,6 +79,7 @@ namespace PriceCalculator
                                             report.setTaxAmount(item, tax);
                                             report.SimplePrint(item);
                                             report.PrintWithTaxOnly(item, tax);
+                                            report.PrintTotalPrice(item);
 
                                         }
 
@@ -91,11 +94,14 @@ namespace PriceCalculator
                                             report.SimplePrint(item);
                                             if(DiscountIsSet)
 
-                                            report.PrintWithDiscount(item, discount);
+                                            report.PrintWithUniversalDiscount(item, discount);
+
                                             else
                                             {
                                                 Console.WriteLine(" No Discount\n");
                                             }
+                                            report.PrintTotalPrice(item,discount);
+
                                         }
                                         break;
 
@@ -111,11 +117,16 @@ namespace PriceCalculator
                                             report.PrintWithTaxOnly(item, tax);
                                             if(DiscountIsSet)
 
-                                                report.PrintWithDiscount(item, discount);
+                                                report.PrintWithUniversalDiscount(item, discount);
                                             else
                                             {
                                                 Console.WriteLine(" No Discount\n");
                                             }
+                                            if(UpcDiscountIsSet)
+                                                report.PrintWithTotalDiscount(item,discount,upcDiscount);
+
+                                            report.PrintTotalPrice(item,discount,upcDiscount);
+
 
 
                                         }
@@ -130,7 +141,34 @@ namespace PriceCalculator
                             }
                             break;
                         }
-                    case "4":
+                    case "4": {
+
+                            Console.WriteLine("Enter UPC Discount Amount");
+                            double discountEnterd = 0.1;
+                            try
+                            {
+                                discountEnterd = double.Parse(Console.ReadLine());
+                                Discount discount1=new Discount(discountEnterd);
+                                Console.WriteLine("Enter UPC Number");
+                                var UpcNumber =  int.Parse(Console.ReadLine());
+
+
+                                upcDiscount = new UPCDiscount(UpcNumber, discount1);
+
+                                UpcDiscountIsSet = true;
+
+
+                            }
+                            catch
+                            {
+                                throw new Exception();
+
+
+                            }
+
+                            break;
+                        }
+                    case "5":
                         {
                             return;
                         }
@@ -147,7 +185,8 @@ namespace PriceCalculator
             Console.WriteLine("1. Set Tax\n" +
                 "2. Set Discount\n" +
                 "3. Report\n" +
-                "4. Exit");
+                "4. Set UPC Discount\n"+
+                "5. Exit\n");
             return Console.ReadLine();
 
         }
