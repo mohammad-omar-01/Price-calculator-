@@ -9,5 +9,7 @@ namespace PriceCalculator
             var discountAmount = product.price.RegularPrice * discount.DiscountRate;
             return Math.Round(discountAmount, 2);
         }
+
+      
     }
 }

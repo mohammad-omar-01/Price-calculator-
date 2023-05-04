@@ -7,91 +7,78 @@ namespace PriceCalculator
         public Tax tax { get; set; }
         public Discount discount { get; set; }
 
-        public Report(Tax tax, Discount discount)
+        public UPCDiscount upcDiscount { get; set;}
+        private Price OrginialPrice { get; set; }
+        public Report() {
+            this.tax = new Tax(0);
+            this.discount = new Discount(0);
+            this.upcDiscount = new UPCDiscount(0,discount);
+            OrginialPrice = new Price(0);
+
+        }
+        public Report(Tax tax, Discount discount, UPCDiscount discountDiscount)
         {
             this.tax = tax;
             this.discount = discount;
+            this.upcDiscount = discountDiscount;
+            OrginialPrice = new Price(0);
         }
-        public  double TaxAmount { get; private set; }
+        private  double TaxAmount { get;  set; }
+        private double DiscountAmount { get;  set;}
+       
 
-        public  void setTaxAmount ( Product product, Tax tax)
+
+        public void SetupReport(Product product) {
+            TaxAmount = 0;
+            DiscountAmount = 0;
+            OrginialPrice = product.price;
+            bool discountIsNotSet = true;
+            bool upcDiscountIsNotSet = true;
+            DiscountService discountService = new DiscountService();
+            if (discount.IsBeforeTax) {
+                DiscountAmount += discountService.CalculateDiscount(product, discount);
+                discountIsNotSet = false;
+            }
+            if (upcDiscount.Discount.IsBeforeTax) {
+                DiscountAmount += discountService.CalculateDiscount(product, upcDiscount.Discount);
+                upcDiscountIsNotSet = false;
+            }
+            product.price = new (OrginialPrice.RegularPrice - DiscountAmount);
+            
+            setTaxAmount(product);
+            if(discountIsNotSet) DiscountAmount += discountService.CalculateDiscount(product, discount);
+            if(upcDiscountIsNotSet) DiscountAmount += discountService.CalculateDiscount(product, upcDiscount.Discount);
+
+        }
+
+        public void setTaxAmount(Product product)
         {
+            TaxAmount = 0;
             TaxService taxService = new TaxService();
-
-            TaxAmount = taxService.CalculateTax(product, tax);
-
-
-        }
-
-
-        public  void PrintWithTaxOnly( Product product, Tax tax)
-        { 
-            setTaxAmount(product, tax);
-
-            Console.WriteLine($"Tax Amount is {TaxAmount}");
+                
+                TaxAmount = taxService.CalculateTax(product, tax);
 
         }
         public  void SimplePrint( Product product)
         {
-            Console.WriteLine($"Title \"{product.Name}\", UPC = {product.Upc}, price= {product.price.FormattedPrice} ");
+            SetupReport(product);
+            Console.WriteLine($"Title \"{product.Name}\", UPC = {product.Upc}, price= {OrginialPrice.FormattedPrice} ");
 
         }
-        public  void PrintWithUniversalDiscount( Product product,Discount discount)
+             
+        public void PrintWithTotalDiscount(Product product)
         {
-            DiscountService discountService = new DiscountService();
-
-            var DiscountAmount = discountService.CalculateDiscount(product, discount);
-
-            Console.WriteLine($"Uneversal discount amount is {DiscountAmount}");
-
-        }
-        
-
-        public void PrintWithTotalDiscount(Product product, Discount discount,UPCDiscount upcDiscount)
-        {
-            DiscountService discountService = new DiscountService();
-
-
-            var DiscountAmount = discountService.CalculateDiscount(product, discount);
-            var upcDiscountAmount = upcDiscount.CalculateUpcDiscount(product);
-            DiscountAmount += upcDiscountAmount;
-
-            if (upcDiscountAmount > 0)
-            {
-                var formattedUpcDiscount=StringFormatter.FormatRegularValue(upcDiscountAmount);
-                Console.WriteLine($"UpcNumber Discount is {formattedUpcDiscount}");
-            }
-
+            SetupReport(product);
             Console.WriteLine($"Total Discount Amount is {DiscountAmount}");
 
         }
 
-        public void PrintTotalPrice(Product product) {
-            double totalprice = TaxAmount + product.price.RegularPrice;
-            Price totalPrice = new Price(totalprice);
-            Console.WriteLine($"Total Price With Tax Only is {totalPrice.FormattedPrice}  \n");
-        }
-        public void PrintTotalPrice(Product product,Discount discount)
-        {
-            DiscountService discountService = new DiscountService();
-
-            var DiscountAmount = discountService.CalculateDiscount(product, discount);
-
-            double totalprice = TaxAmount + product.price.RegularPrice-DiscountAmount;
-            Price totalPrice = new Price(totalprice);
-            Console.WriteLine($"Total Price With Tax And Universal Discount Only is {totalPrice.FormattedPrice} \n");
-        }
         public void PrintTotalPrice(Product product,Discount discount,UPCDiscount uPCDiscount)
         {
-            DiscountService discountService = new DiscountService();
-
-            var DiscountAmount = discountService.CalculateDiscount(product, discount);
-            var UpcDiscountAmount=uPCDiscount.CalculateUpcDiscount(product);
-            DiscountAmount += UpcDiscountAmount;
-
-            double totalprice = TaxAmount + product.price.RegularPrice-DiscountAmount;
+            double totalprice = TaxAmount + OrginialPrice.RegularPrice-DiscountAmount;
             Price totalPrice = new Price(totalprice);
-            Console.WriteLine($"Total Price With All Discounts is {totalPrice.FormattedPrice} \n");
+            Console.WriteLine($"Total Price With All Discounts is {totalPrice.FormattedPrice}");
+            Console.WriteLine($"Total Discoint is {DiscountAmount}\n");
         }
 
     }

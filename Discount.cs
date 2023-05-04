@@ -13,6 +13,7 @@
                 else discount = 0;
             }
         }
+        public Discount() { }
 
         public Discount(double value)
         {

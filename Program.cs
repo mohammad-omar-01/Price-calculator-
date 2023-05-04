@@ -1,4 +1,5 @@
 ﻿using Price_Calculator;
+using System.Runtime.CompilerServices;
 
 namespace PriceCalculator
 {
@@ -6,13 +7,13 @@ namespace PriceCalculator
     {
         static void Main(string[] args)
         {
-            Tax tax = new Tax(20);
-            Discount discount = new Discount(15);
-            UPCDiscount upcDiscount=null; 
+            Discount discount = new Discount(0);
+            UPCDiscount upcDiscount = new UPCDiscount();
+
             ProductRepository repository = new ProductRepository();
-            Report report = new Report(tax, discount);
+            Report report = new Report();
             bool DiscountIsSet = false;
-            bool UpcDiscountIsSet=false;
+            bool UpcDiscountIsSet = false;
             while (true)
             {
                 string choice = menu();
@@ -20,7 +21,6 @@ namespace PriceCalculator
                 {
                     case "1":
                         {
-
                             Console.WriteLine("Enter Tax Amount");
                             double taxentered = 0.1;
                             try
@@ -34,7 +34,7 @@ namespace PriceCalculator
 
                                 taxentered = 0.1;
                             }
-                            tax.TaxRate = taxentered;
+                            Tax tax = new Tax(taxentered);
                             report.tax = tax;
 
 
@@ -43,13 +43,31 @@ namespace PriceCalculator
                     case "2":
                         {
                             Console.WriteLine("Enter Discount Amount");
-                            double discountEnterd = 0.1;
+                            double discountEnterd = 0.0;
                             try
                             {
+                                
+
                                 discountEnterd = double.Parse(Console.ReadLine());
+                                Console.WriteLine("Set Discount Type : 1. Applied After Tax   2. Applied before Tax");
+                                var discountType = Console.ReadLine();
+                                if (discountType.Equals("1"))
+                                {
+                                    discount.IsBeforeTax = false;
+                                }
+                                else if (discountType.Equals("2"))
+                                {
+                                    discount.IsBeforeTax = true;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("invalid Choice, DiscountType is has been set to be taken after Tax \n");
+                                }
+
                                 discount.DiscountRate = discountEnterd;
                                 report.discount = discount;
                                 DiscountIsSet = true;
+
 
 
                             }
@@ -57,104 +75,49 @@ namespace PriceCalculator
                             {
 
                             }
-                          
 
+
+                            break;
+
+                        }
+                    case "4":
+                        {
+                           
+                            foreach (var item in repository.products)
+                            {
+
+                                report.SimplePrint(item);
+                                report.PrintTotalPrice(item, discount, upcDiscount);
+
+                            }
                             break;
 
                         }
                     case "3":
                         {
-                            Console.WriteLine("\nplease Select the Report Type\n " +
-                                "1. Tax Report\n" +
-                                "2. Discount Report\n" +
-                                "3. Total Report\n" +
-                                "4. Exit the System");
-                            string printReportChoice = Console.ReadLine();
-                            switch (printReportChoice)
-                            {
-                                case "1":
-                                    {
-                                        foreach (var item in repository.products)
-                                        {
-                                            report.setTaxAmount(item, tax);
-                                            report.SimplePrint(item);
-                                            report.PrintWithTaxOnly(item, tax);
-                                            report.PrintTotalPrice(item);
-
-                                        }
-
-                                        break;
-                                    }
-                                case "2":
-                                    {
-                                        foreach (var item in repository.products)
-                                        {
-                                            report.setTaxAmount(item, tax);
-
-                                            report.SimplePrint(item);
-                                            if(DiscountIsSet)
-
-                                            report.PrintWithUniversalDiscount(item, discount);
-
-                                            else
-                                            {
-                                                Console.WriteLine(" No Discount\n");
-                                            }
-                                            report.PrintTotalPrice(item,discount);
-
-                                        }
-                                        break;
-
-                                    }
-                                case "3":
-                                    {
-                                        foreach (var item in repository.products)
-                                        {
-                                            report.setTaxAmount(item, tax);
-
-                                            report.SimplePrint(item);
-
-                                            report.PrintWithTaxOnly(item, tax);
-                                            if(DiscountIsSet)
-
-                                                report.PrintWithUniversalDiscount(item, discount);
-                                            else
-                                            {
-                                                Console.WriteLine(" No Discount\n");
-                                            }
-                                            if(UpcDiscountIsSet)
-                                                report.PrintWithTotalDiscount(item,discount,upcDiscount);
-
-                                            report.PrintTotalPrice(item,discount,upcDiscount);
-
-
-
-                                        }
-                                        break;
-                                    }
-                                default:
-                                    {
-                                        Console.WriteLine("Invalid option");
-
-                                        break;
-                                    }
-                            }
-                            break;
-                        }
-                    case "4": {
-
                             Console.WriteLine("Enter UPC Discount Amount");
-                            double discountEnterd = 0.1;
+                            double discountEnterd = 0.0;
                             try
                             {
                                 discountEnterd = double.Parse(Console.ReadLine());
-                                Discount discount1=new Discount(discountEnterd);
+                                Discount discount1 = new Discount(discountEnterd);
+                                Console.WriteLine("Set Upc Discount Type : 1. Applied After Tax   2. Applied before Tax");
+                                var discountType = Console.ReadLine();
+                                if (discountType.Equals("1"))
+                                {
+                                    discount1.IsBeforeTax = false;
+                                }
+                                else if (discountType.Equals("2"))
+                                {
+                                    discount1.IsBeforeTax = true;
+                                }
                                 Console.WriteLine("Enter UPC Number");
-                                var UpcNumber =  int.Parse(Console.ReadLine());
+                                var UpcNumber = int.Parse(Console.ReadLine());
 
 
-                                upcDiscount = new UPCDiscount(UpcNumber, discount1);
-
+                                upcDiscount.UpcNumber = UpcNumber;
+                                upcDiscount.Discount = discount1;
+                                report.upcDiscount=upcDiscount;
                                 UpcDiscountIsSet = true;
 
 
@@ -184,8 +147,8 @@ namespace PriceCalculator
 
             Console.WriteLine("1. Set Tax\n" +
                 "2. Set Discount\n" +
-                "3. Report\n" +
-                "4. Set UPC Discount\n"+
+                "3. Set UPC Discount\n" +
+                "4. Report\n" +
                 "5. Exit\n");
             return Console.ReadLine();
 
