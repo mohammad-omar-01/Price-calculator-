@@ -47,13 +47,13 @@
 
         }
         public void PrintTotalAdditionalCosts() { 
-        if(ReportCalculator.additionalCost.Count==0)
+        if(ReportCalculator.additionalCosts.Count==0)
             {
                 Console.WriteLine("No Additional Costs");
             }
         else
             {
-                ReportCalculator.additionalCost.ForEach(item => Console.WriteLine($"{item.Description},{item.CostAmount}"));
+                ReportCalculator.additionalCosts.ForEach(item => Console.WriteLine($"{item.Description},{item.CostAmount}"));
             }
         
         }

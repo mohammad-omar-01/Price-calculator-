@@ -6,7 +6,7 @@
         public Discount discount { get; set; }
         public UPCDiscount upcDiscount { get; set; }
         internal Price OrginialPrice { get; set; }
-        public List<AdditionalCost> additionalCost { get; set;}
+        public List<AdditionalCost> additionalCosts { get; set;}
         internal Price TotalPriceToPrint {  get; private set; }
         internal double TaxAmount { get; set; }
         internal double DiscountAmount { get; set; }
@@ -53,12 +53,12 @@
             discount = new Discount();
             upcDiscount=new UPCDiscount();
             OrginialPrice=new Price();
-            additionalCost = new List<AdditionalCost>();
+            additionalCosts = new List<AdditionalCost>();
             TotalPriceToPrint=new Price();
         }
         private void AdjustCost() {
 
-              var list= additionalCost.TakeWhile(item=>item.CostPersentage>0 ).ToList();
+              var list= additionalCosts.TakeWhile(item=>item.CostPersentage>0 ).ToList();
 
              list.ForEach(item => item.CostAmount = Math.Round(item.CostPersentage * OrginialPrice.RegularPrice,2));
             
@@ -67,7 +67,7 @@
         public Price GetTotalPrice() {
             AdjustCost();
             double value = this.TaxAmount + this.OrginialPrice.RegularPrice - this.DiscountAmount;
-            value += additionalCost.Sum(v=>v.CostAmount);
+            value += additionalCosts.Sum(v=>v.CostAmount);
             TotalPriceToPrint = new Price(value);
             return TotalPriceToPrint;
         }

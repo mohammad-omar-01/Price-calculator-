@@ -137,7 +137,7 @@
 
                                             additionalCost.CostPersentage = double.Parse(Console.ReadLine());
                                         }
-                                        reportCalculator.additionalCost.Add(additionalCost);
+                                        reportCalculator.additionalCosts.Add(additionalCost);
                                     }
                                     else if (typed.Equals("2"))
                                     {
