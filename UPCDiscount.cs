@@ -1,19 +1,13 @@
-﻿using Price_Calculator;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PriceCalculator
+﻿namespace PriceCalculator
 {
     public class UPCDiscount
     {
         public int UpcNumber { get; set; }
 
-        public Discount Discount { get; set; } 
-        public UPCDiscount() { 
-            Discount = new Discount(); 
+        public Discount Discount { get; set; }
+        public UPCDiscount()
+        {
+            Discount = new Discount();
         }
         public UPCDiscount(int upc, Discount discountRate)
         {
@@ -24,10 +18,11 @@ namespace PriceCalculator
         public double CalculateUpcDiscount(Product product)
         {
             double result = 0;
-            if (product.Upc == this.UpcNumber) {
-                result =  product.price.RegularPrice * Discount.DiscountRate;
+            if (product.Upc == this.UpcNumber)
+            {
+                result = product.price.RegularPrice * Discount.DiscountRate;
             }
-            return Math.Round(result,2);
+            return Math.Round(result, 2);
         }
     }
 }

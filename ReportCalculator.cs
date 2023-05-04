@@ -28,13 +28,17 @@
                 DiscountAmount += discountService.CalculateDiscount(product, upcDiscount.Discount);
                 upcDiscountIsNotSet = false;
             }
-            product.price = new(OrginialPrice.RegularPrice - DiscountAmount);
+            product.price = new (OrginialPrice.RegularPrice - DiscountAmount);
 
             setTaxAmount(product);
+
             if (discountIsNotSet) DiscountAmount += discountService.CalculateDiscount(product, discount);
             if (upcDiscountIsNotSet) DiscountAmount += discountService.CalculateDiscount(product, upcDiscount.Discount);
+            DiscountAmount=Math.Round(DiscountAmount, 2);
+            GetTotalPrice();
 
         }
+
         public void setTaxAmount(Product product)
         {
             TaxAmount = 0;
@@ -52,9 +56,18 @@
             additionalCost = new List<AdditionalCost>();
             TotalPriceToPrint=new Price();
         }
+        private void AdjustCost() {
 
+              var list= additionalCost.TakeWhile(item=>item.CostPersentage>0 ).ToList();
+
+             list.ForEach(item => item.CostAmount = Math.Round(item.CostPersentage * OrginialPrice.RegularPrice,2));
+            
+        
+        }
         public Price GetTotalPrice() {
+            AdjustCost();
             double value = this.TaxAmount + this.OrginialPrice.RegularPrice - this.DiscountAmount;
+            value += additionalCost.Sum(v=>v.CostAmount);
             TotalPriceToPrint = new Price(value);
             return TotalPriceToPrint;
         }

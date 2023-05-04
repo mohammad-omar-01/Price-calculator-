@@ -3,7 +3,6 @@
     public class Tax
     {
         private double tax;
-
         public double TaxRate
         {
             get { return tax; }
@@ -13,11 +12,13 @@
                 else tax = 0;
             }
         }
-
+        public Tax()
+        {
+            this.tax = 0;
+        }
         public Tax(double value)
         {
             this.TaxRate = value;
-
         }
     }
 }
