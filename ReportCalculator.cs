@@ -11,14 +11,19 @@
         internal Price TotalPriceToPrint {  get; private set; }
         internal double TaxAmount { get; set; }
         internal double DiscountAmount { get; set; }
+        internal Cap cap { get; set; }
+
+        DiscountService discountService = null;
+
         public void SetupReport(Product product)
         {
             discountType = DiscountType.AdditiaveDiscount;
             TaxAmount = 0;
             DiscountAmount = 0;
             OrginialPrice = product.price;
-            DiscountService discountService = new DiscountService();
-            
+            discountService = new DiscountService();
+
+
             if (discount.IsBeforeTax)
             {
                 DiscountAmount += discountService.CalculateDiscount(product, discount);
@@ -44,6 +49,11 @@
                 }
             }
             DiscountAmount += discountService.CalculateDiscount(product, upcDiscount.Discount);
+            AdjustCap();
+            if(DiscountAmount>cap.CapAmount)
+            {
+                DiscountAmount= cap.CapAmount;
+            }
 
             DiscountAmount=Math.Round(DiscountAmount, 2);
             GetTotalPrice();
@@ -76,6 +86,12 @@
              list.ForEach(item => item.CostAmount = Math.Round(item.CostPersentage * OrginialPrice.RegularPrice,2));
             
         
+        }
+        private void AdjustCap() { 
+        if(cap.CapPersentage>0)
+            {
+                cap.CapAmount = Math.Round(cap.CapPersentage * OrginialPrice.RegularPrice, 2);
+            }
         }
         public Price GetTotalPrice() {
             AdjustCost();

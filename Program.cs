@@ -27,7 +27,7 @@
 
                                 taxentered = 0.1;
                             }
-                            reportCalculator.tax=new Tax(taxentered);
+                            reportCalculator.tax = new Tax(taxentered);
 
 
                             break;
@@ -121,7 +121,7 @@
                                         Console.WriteLine("Enter Cost Description");
                                         additionalCost.Description = Console.ReadLine();
                                         Console.WriteLine("Enter Cost type: 1. Value 2.Percentage");
-                                        string costType=Console.ReadLine();
+                                        string costType = Console.ReadLine();
 
 
                                         if (costType.Equals("1"))
@@ -156,6 +156,32 @@
                         }
                     case "5":
                         {
+                            Console.WriteLine("1.Enter Cap amount 2. Enter Cap Percentage");
+                            string choiceForCap= Console.ReadLine();
+                            if (choiceForCap.Equals("1"))
+                            {
+                                Console.WriteLine("Enter Value Amount ");
+                                double capAmountEnterd = Double.Parse(Console.ReadLine());
+                                Cap cap = new Cap();
+                                cap.CapAmount = capAmountEnterd;
+                                reportCalculator.cap = cap;
+                            }
+                            else {
+                                Console.WriteLine("Enter Percentage Amount ");
+                                double capPercentage = Double.Parse(Console.ReadLine());
+                                Cap cap = new Cap();
+                                cap.CapPersentage=capPercentage;
+                                reportCalculator.cap = cap;
+
+                            }
+
+
+
+
+                            break;
+                        }
+                    case "6":
+                        {
                             report.ReportCalculator = reportCalculator;
 
                             foreach (var item in repository.products)
@@ -171,7 +197,7 @@
                             break;
 
                         }
-                    case "6":
+                    case "7":
                         {
                             return;
                         }
@@ -189,8 +215,9 @@
                 "2. Set Discount\n" +
                 "3. Set UPC Discount\n" +
                 "4. Add Additonal Costs\n" +
-                "5. Report\n" +
-                "6. Exit\n");
+                "5. Set Cap Amount\n" +
+                "6. Report\n" +
+                "7. Exit\n");
             return Console.ReadLine();
 
         }
