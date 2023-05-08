@@ -78,6 +78,7 @@
             additionalCosts = new List<AdditionalCost>();
             TotalPriceToPrint=new Price();
             discountType= new DiscountType();
+            cap = new Cap();
         }
         private void AdjustCost() {
 

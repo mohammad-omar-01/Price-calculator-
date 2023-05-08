@@ -2,16 +2,38 @@
 {
     internal class Program
     {
+        static string Currencyprint() {
+            Console.WriteLine("" +
+                    "1. USD\n" +
+                    "2. ILS\n" +
+                    "3. AED\n" +
+                    "4. GPY\n" +
+                    "5. EUR\n" +
+                    "6. JOD\n" +
+                    "7. Other\n");
+            return Console.ReadLine();
+        }
         static void Main(string[] args)
         {
             ProductRepository repository = new ProductRepository();
             ReportPrinter report = new ReportPrinter();
             ReportCalculator reportCalculator = new ReportCalculator();
+            CurrencyType currency = CurrencyType.USD;
             while (true)
             {
                 string choice = menu();
                 switch (choice)
                 {
+                    case "0": {
+                            Console.WriteLine("Choose Currency");
+                            string currencyChoice= Currencyprint();
+                            currency = (CurrencyType) int.Parse(currencyChoice)-1;
+                            report.currency = currency;
+
+                            
+
+                            
+                            break; }
                     case "1":
                         {
                             Console.WriteLine("Enter Tax Amount");
@@ -211,6 +233,7 @@
         public static string menu()
         {
             Console.WriteLine("" +
+                "0. Set Currency\n"+
                 "1. Set Tax\n" +
                 "2. Set Discount\n" +
                 "3. Set UPC Discount\n" +
