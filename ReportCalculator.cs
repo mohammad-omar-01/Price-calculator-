@@ -13,7 +13,7 @@
         internal double DiscountAmount { get; set; }
         public void SetupReport(Product product)
         {
-            discountType = DiscountType.MultiplicativDiscount;
+            discountType = DiscountType.AdditiaveDiscount;
             TaxAmount = 0;
             DiscountAmount = 0;
             OrginialPrice = product.price;
@@ -47,6 +47,7 @@
 
             DiscountAmount=Math.Round(DiscountAmount, 2);
             GetTotalPrice();
+            product.price = new(OrginialPrice.RegularPrice);
 
         }
 
@@ -81,6 +82,7 @@
             double value = this.TaxAmount + this.OrginialPrice.RegularPrice - this.DiscountAmount;
             value += additionalCosts.Sum(v=>v.CostAmount);
             TotalPriceToPrint = new Price(value);
+
             return TotalPriceToPrint;
         }
 
