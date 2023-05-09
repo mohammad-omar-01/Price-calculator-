@@ -1,4 +1,4 @@
-﻿namespace Price_Calculator
+﻿namespace PriceCalculator
 {
     public class Discount
     {
@@ -13,7 +13,13 @@
                 else discount = 0;
             }
         }
-        public Discount() { }
+        public double DiscountValue { get; set; }
+
+        public Discount()
+        {
+            this.DiscountRate = 0;
+            this.IsBeforeTax = false;
+        }
 
         public Discount(double value)
         {

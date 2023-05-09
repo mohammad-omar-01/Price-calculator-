@@ -1,6 +1,4 @@
-﻿using Price_Calculator;
-
-namespace PriceCalculator
+﻿namespace PriceCalculator
 {
     internal interface ITax
     {
