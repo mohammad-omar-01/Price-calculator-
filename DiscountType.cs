@@ -1,2 +1,2 @@
-﻿public enum DiscountType { AdditiaveDiscount, MultiplicativDiscount }
+﻿public enum DiscountType { AdditiveDiscount, MultiplicativeDiscount }
 

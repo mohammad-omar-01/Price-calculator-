@@ -3,14 +3,6 @@
     internal class Program
     {
         static string Currencyprint() {
-            Console.WriteLine("" +
-                    "1. USD\n" +
-                    "2. ILS\n" +
-                    "3. AED\n" +
-                    "4. GPY\n" +
-                    "5. EUR\n" +
-                    "6. JOD\n" +
-                    "7. Other\n");
             return Console.ReadLine();
         }
         static void Main(string[] args)
@@ -18,7 +10,7 @@
             ProductRepository repository = new ProductRepository();
             ReportPrinter report = new ReportPrinter();
             ReportCalculator reportCalculator = new ReportCalculator();
-            CurrencyType currency = CurrencyType.USD;
+            AvailableCurrencies currency = AvailableCurrencies.Dollar;
             while (true)
             {
                 string choice = menu();
@@ -27,7 +19,7 @@
                     case "0": {
                             Console.WriteLine("Choose Currency");
                             string currencyChoice= Currencyprint();
-                            currency = (CurrencyType) int.Parse(currencyChoice)-1;
+                            currency = (AvailableCurrencies) int.Parse(currencyChoice)-1;
                             report.currency = currency;
 
                             
@@ -104,18 +96,17 @@
                                 var discountType = Console.ReadLine();
                                 if (discountType.Equals("1"))
                                 {
-                                    discount1.IsBeforeTax = false;
+                                    upcDiscount.IsBeforeTax = false;
                                 }
                                 else if (discountType.Equals("2"))
                                 {
-                                    discount1.IsBeforeTax = true;
+                                    upcDiscount.IsBeforeTax = true;
                                 }
                                 Console.WriteLine("Enter UPC Number");
                                 var UpcNumber = int.Parse(Console.ReadLine());
 
 
                                 upcDiscount.UpcNumber = UpcNumber;
-                                upcDiscount.Discount = discount1;
                                 reportCalculator.upcDiscount = upcDiscount;
                             }
                             catch

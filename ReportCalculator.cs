@@ -17,7 +17,7 @@
 
         public void SetupReport(Product product)
         {
-            discountType = DiscountType.AdditiaveDiscount;
+            discountType = DiscountType.AdditiveDiscount;
             TaxAmount = 0;
             DiscountAmount = 0;
             OrginialPrice = product.price;
@@ -29,26 +29,26 @@
                 DiscountAmount += discountService.CalculateDiscount(product, discount);
               
             }
-            if (upcDiscount.Discount.IsBeforeTax)
+            if (upcDiscount.IsBeforeTax)
             {
-                if (discountType.Equals(DiscountType.MultiplicativDiscount))
+                if (discountType.Equals(DiscountType.MultiplicativeDiscount))
                 {
                     product.price = new(OrginialPrice.RegularPrice - DiscountAmount);
                 }
-                DiscountAmount += discountService.CalculateDiscount(product, upcDiscount.Discount);
+                DiscountAmount += discountService.CalculateDiscount(product, upcDiscount);
             }
             product.price = new (OrginialPrice.RegularPrice - DiscountAmount);
 
             setTaxAmount(product);
 
             if (!discount.IsBeforeTax) DiscountAmount += discountService.CalculateDiscount(product, discount);
-            if (!upcDiscount.Discount.IsBeforeTax) {
-                if (discountType.Equals(DiscountType.MultiplicativDiscount))
+            if (!upcDiscount.IsBeforeTax) {
+                if (discountType.Equals(DiscountType.MultiplicativeDiscount))
                 {
                     product.price = new(OrginialPrice.RegularPrice - DiscountAmount);
                 }
             }
-            DiscountAmount += discountService.CalculateDiscount(product, upcDiscount.Discount);
+            DiscountAmount += discountService.CalculateDiscount(product, upcDiscount);
             AdjustCap();
             if(DiscountAmount>cap.CapAmount)
             {

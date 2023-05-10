@@ -4,12 +4,12 @@
     {
         public ReportCalculator ReportCalculator { get; set; }
         bool ReportIsNotSet { get; set; }
-        public CurrencyType currency { get; set; }
+        public AvailableCurrencies currency { get; set; }
         public ReportPrinter()
         {
             ReportCalculator = new ReportCalculator();
             ReportIsNotSet = true;
-            currency =  CurrencyType.USD;
+            currency =  AvailableCurrencies.Dollar;
         }
         public ReportPrinter(ReportCalculator reportCalculator)
         {
@@ -42,7 +42,7 @@
             }
             else
             {
-                Console.WriteLine($"UPC Discount is {ReportCalculator.upcDiscount.Discount.DiscountValue} {currency}");
+                Console.WriteLine($"UPC Discount is {ReportCalculator.upcDiscount.DiscountValue} {currency}");
                 Console.WriteLine($"Universal Discount is {ReportCalculator.discount.DiscountValue} {currency}");
                 Console.WriteLine($"Total Discount Amount is {DiscountAmount} {currency}");
             }
