@@ -9,7 +9,7 @@
         }
         public static string FormatRegularValue(this double value)
         {
-            return Math.Round(value, 2).ToString("$0.00");
+            return Math.Round(value, 2).ToString("0.00");
 
         }
 

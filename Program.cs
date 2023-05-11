@@ -2,16 +2,36 @@
 {
     internal class Program
     {
+        static void Currencyprint() {
+            foreach (var currency in Enum.GetValues(typeof(Currency))){ 
+            Console.WriteLine(currency.ToString());
+            }
+        }
+        static public Currency HandleChoice() {
+            string choice=Console.ReadLine();
+            return (Currency)int.Parse(choice) - 1;
+        }
         static void Main(string[] args)
         {
             ProductRepository repository = new ProductRepository();
             ReportPrinter report = new ReportPrinter();
             ReportCalculator reportCalculator = new ReportCalculator();
+            Currency currency = Currency.Dollar;
             while (true)
             {
                 string choice = menu();
                 switch (choice)
                 {
+                    case "0": {
+                            Console.WriteLine("Choose Currency");
+                             currency = HandleChoice();
+
+                            report.currency = currency;
+
+                            
+
+                            
+                            break; }
                     case "1":
                         {
                             Console.WriteLine("Enter Tax Amount");
@@ -82,18 +102,17 @@
                                 var discountType = Console.ReadLine();
                                 if (discountType.Equals("1"))
                                 {
-                                    discount1.IsBeforeTax = false;
+                                    upcDiscount.IsBeforeTax = false;
                                 }
                                 else if (discountType.Equals("2"))
                                 {
-                                    discount1.IsBeforeTax = true;
+                                    upcDiscount.IsBeforeTax = true;
                                 }
                                 Console.WriteLine("Enter UPC Number");
                                 var UpcNumber = int.Parse(Console.ReadLine());
 
 
                                 upcDiscount.UpcNumber = UpcNumber;
-                                upcDiscount.Discount = discount1;
                                 reportCalculator.upcDiscount = upcDiscount;
                             }
                             catch
@@ -211,6 +230,7 @@
         public static string menu()
         {
             Console.WriteLine("" +
+                "0. Set Currency\n"+
                 "1. Set Tax\n" +
                 "2. Set Discount\n" +
                 "3. Set UPC Discount\n" +
