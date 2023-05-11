@@ -2,15 +2,21 @@
 {
     internal class Program
     {
-        static string Currencyprint() {
-            return Console.ReadLine();
+        static void Currencyprint() {
+            foreach (var currency in Enum.GetValues(typeof(Currency))){ 
+            Console.WriteLine(currency.ToString());
+            }
+        }
+        static public Currency HandleChoice() {
+            string choice=Console.ReadLine();
+            return (Currency)int.Parse(choice) - 1;
         }
         static void Main(string[] args)
         {
             ProductRepository repository = new ProductRepository();
             ReportPrinter report = new ReportPrinter();
             ReportCalculator reportCalculator = new ReportCalculator();
-            AvailableCurrencies currency = AvailableCurrencies.Dollar;
+            Currency currency = Currency.Dollar;
             while (true)
             {
                 string choice = menu();
@@ -18,8 +24,8 @@
                 {
                     case "0": {
                             Console.WriteLine("Choose Currency");
-                            string currencyChoice= Currencyprint();
-                            currency = (AvailableCurrencies) int.Parse(currencyChoice)-1;
+                             currency = HandleChoice();
+
                             report.currency = currency;
 
                             

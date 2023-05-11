@@ -21,7 +21,7 @@
             {
                 result = product.price.RegularPrice * this.DiscountRate;
             }
-            return Math.Round(result, 2);
+            return Math.Round(result, 4);
         }
     }
 }

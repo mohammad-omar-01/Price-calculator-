@@ -1,13 +1,13 @@
 ﻿namespace PriceCalculator
 {
 
-    public enum CurrencyType { USD, ILS, AED, GPY, EUR, JOD }
+    public enum AllCurrencies { USD, ILS, AED, GPY, EUR, JOD }
 
-    public enum AvailableCurrencies
+    public enum Currency
     {
-        Dollar=CurrencyType.USD,
-        Shekil= CurrencyType.ILS,
-        Euro=CurrencyType.EUR,
+        Dollar=AllCurrencies.USD,
+        Shekil= AllCurrencies.ILS,
+        Euro=AllCurrencies.EUR,
     }
 
 }

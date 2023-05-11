@@ -55,7 +55,7 @@
                 DiscountAmount= cap.CapAmount;
             }
 
-            DiscountAmount=Math.Round(DiscountAmount, 2);
+            DiscountAmount=Math.Round(DiscountAmount, 4);
             GetTotalPrice();
             product.price = new(OrginialPrice.RegularPrice);
 
@@ -84,14 +84,14 @@
 
               var list= additionalCosts.TakeWhile(item=>item.CostPersentage>0 ).ToList();
 
-             list.ForEach(item => item.CostAmount = Math.Round(item.CostPersentage * OrginialPrice.RegularPrice,2));
+             list.ForEach(item => item.CostAmount = Math.Round(item.CostPersentage * OrginialPrice.RegularPrice,4));
             
         
         }
         private void AdjustCap() { 
         if(cap.CapPersentage>0)
             {
-                cap.CapAmount = Math.Round(cap.CapPersentage * OrginialPrice.RegularPrice, 2);
+                cap.CapAmount = Math.Round(cap.CapPersentage * OrginialPrice.RegularPrice, 4);
             }
         }
         public Price GetTotalPrice() {

@@ -4,12 +4,12 @@
     {
         public ReportCalculator ReportCalculator { get; set; }
         bool ReportIsNotSet { get; set; }
-        public AvailableCurrencies currency { get; set; }
+        public Currency currency { get; set; }
         public ReportPrinter()
         {
             ReportCalculator = new ReportCalculator();
             ReportIsNotSet = true;
-            currency =  AvailableCurrencies.Dollar;
+            currency =  Currency.Dollar;
         }
         public ReportPrinter(ReportCalculator reportCalculator)
         {
